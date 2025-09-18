@@ -40,7 +40,7 @@ const App: React.FC = () => {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>Tracker de Gastos Personales</h1>
-        <p className={styles.subtitle}>Del aula a la industria: hábitos financieros + herramientas</p>
+        <p className={styles.subtitle}>Del aula a la industria: habilidades + herramientas que te abren puertas</p>
       </header>
 
       <IncomeSetup

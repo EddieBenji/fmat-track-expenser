@@ -26,11 +26,11 @@ const App: React.FC = () => {
     setState({ ...state, transactions: state.transactions.filter(t => t.id !== id) });
   };
 
-  const { totalExpenses, balance, recommendedSavings } = useMemo(() => {
+  const { totalExpenses, balance, setRules } = useMemo(() => {
     const expenses = state.transactions.filter(t => t.type === 'expense').reduce((a, t) => a + t.amount, 0);
     const bal = computeBalance(state.monthlyIncome, state.transactions);
-    const rec = recommendedBuckets(state.monthlyIncome, state.rule).savings;
-    return { totalExpenses: expenses, balance: bal, recommendedSavings: rec };
+    const rec = recommendedBuckets(state.monthlyIncome, state.rule);
+    return { totalExpenses: expenses, balance: bal, setRules: rec };
   }, [state]);
 
   const onChangeIncome = (val: number) => setState({ ...state, monthlyIncome: val });
@@ -53,7 +53,7 @@ const App: React.FC = () => {
       <SummaryCards
         balance={balance}
         totalExpenses={totalExpenses}
-        recommendedSavings={recommendedSavings}
+        setRules={setRules}
       />
 
       <TransactionForm onAdd={addTransaction} />

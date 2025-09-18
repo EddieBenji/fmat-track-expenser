@@ -4,12 +4,12 @@ import styles from './TransactionForm.module.css';
 
 type Props = { onAdd: (tx: Transaction) => void };
 
-const defaultCategories = ['Renta', 'Comida', 'Transporte', 'Ocio', 'Servicios'];
+const defaultCategories: string[] = ['Comida', 'Transporte', 'Ocio', 'Servicios', 'Salud', 'Belleza', 'Renta', 'Ahorro', 'Otros'];
 
 const TransactionForm: React.FC<Props> = ({ onAdd }) => {
   const [type, setType] = useState<'income' | 'expense'>('expense');
   const [amount, setAmount] = useState<number>(0);
-  const [category, setCategory] = useState<string>(defaultCategories[1]);
+  const [category, setCategory] = useState<string>(defaultCategories[0]);
   const [note, setNote] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,6 +25,7 @@ const TransactionForm: React.FC<Props> = ({ onAdd }) => {
     });
     setAmount(0);
     setNote('');
+    setCategory(defaultCategories[0]);
   };
 
   return (
@@ -36,6 +37,15 @@ const TransactionForm: React.FC<Props> = ({ onAdd }) => {
           <option value="income">Ingreso</option>
           <option value="expense">Gasto</option>
         </select>
+        <select value={category} onChange={(e) => setCategory(e.target.value)} className={styles.input}>
+          {defaultCategories.map((cat) => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
+
+      </div>
+
+      <div className={styles.row}>
 
         <input
           type="number"
@@ -44,16 +54,6 @@ const TransactionForm: React.FC<Props> = ({ onAdd }) => {
           onChange={(e) => setAmount(Number(e.target.value))}
           className={styles.input}
           min={0}
-        />
-      </div>
-
-      <div className={styles.row}>
-        <input
-          type="text"
-          placeholder="Categoría (ej. Renta, Comida)"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className={styles.input}
         />
         <input
           type="text"

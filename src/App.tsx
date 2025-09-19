@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import { useSupabaseStorage } from './hooks/useLocalStorage';
 import type { AppState, Transaction, Rule } from './types';
 import { computeBalance, recommendedBuckets } from './utils';
 import IncomeSetup from './components/IncomeSetup';
@@ -16,7 +16,7 @@ const initialState: AppState = {
 };
 
 const App: React.FC = () => {
-  const [state, setState] = useLocalStorage<AppState>('expense-tracker', initialState);
+  const { state, setState } = useSupabaseStorage<AppState>(initialState);
 
   const addTransaction = (tx: Transaction) => {
     setState({ ...state, transactions: [tx, ...state.transactions] });
